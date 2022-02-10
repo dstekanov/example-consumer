@@ -30,4 +30,4 @@ jobs:
       - name: Tests
         run: make test
       - name: Publish pacts
-        run: GIT_BRANCH=${GITHUB_REF_NAME} make publish_pacts
+        run: GIT_BRANCH=${GITHUB_HEAD_REF} make publish_pacts
