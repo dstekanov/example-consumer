@@ -1,7 +1,7 @@
 name: Run tests
 
 on:
-  pull_request: # to run tests upon pull request
+  push:
     branches:
       - develop
       - release**
