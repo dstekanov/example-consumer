@@ -25,7 +25,7 @@ jobs:
           node-version: '12'
       - name: Install
         run: npm i
-      - name: Test
+      - name: Tests
         run: make test
       - name: Publish pacts
         run: GIT_BRANCH=${GIT_REF:11} make publish_pacts
