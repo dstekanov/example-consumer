@@ -13,7 +13,9 @@ env:
   PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN_FOR_CI_CD_WORKSHOP }}
   REACT_APP_API_BASE_URL: http://localhost:8080
   GIT_COMMIT: ${{ github.sha }}
-  GIT_REF: ${{ github.ref }}
+  GITHUB_HEAD_REF: ${GITHUB_HEAD_REF}
+  GITHUB_BASE_REF: ${GITHUB_BASE_REF}
+  GITHUB_REF: ${GITHUB_REF}
 
 jobs:
   test:
@@ -25,7 +27,7 @@ jobs:
           node-version: '12'
       - name: Install
         run: npm i
-      - name: Test
+      - name: Tests
         run: make test
       - name: Publish pacts
-        run: GIT_BRANCH=${GIT_REF:11} make publish_pacts
+        run: GIT_BRANCH=${GITHUB_HEAD_REF} make publish_pacts
