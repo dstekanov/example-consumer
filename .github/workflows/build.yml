@@ -11,6 +11,19 @@ env:
   GIT_REF: ${{ github.ref }}
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+      - name: Install
+        run: npm i
+      - name: Tests
+        run: make test
+      - name: Publish pacts
+        run: GIT_BRANCH=${GITHUB_REF_NAME} make publish_pacts
 
   # Runs on branches as well, so we know the status of our PRs
   can-i-deploy:
