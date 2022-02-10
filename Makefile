@@ -63,9 +63,6 @@ test_nock: .env
 ## Deploy tasks
 ## =====================
 
-create_environment:
-	@"${PACT_CLI}" broker create-environment --name production --production
-
 deploy: deploy_app record_deployment
 
 no_deploy:
@@ -76,7 +73,7 @@ can_i_deploy: .env
 	@"${PACT_CLI}" broker can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
 	  --version ${GIT_COMMIT} \
-	  --to-environment production \
+	  --to-environment prod \
 	  --retry-while-unknown 0 \
 	  --retry-interval 10
 
@@ -85,7 +82,7 @@ deploy_app:
 	@echo "Deploying to production"
 
 record_deployment: .env
-	@"${PACT_CLI}" broker record-deployment --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --environment production
+	@"${PACT_CLI}" broker record-deployment --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --environment prod
 
 ## =====================
 ## Pactflow set up tasks
