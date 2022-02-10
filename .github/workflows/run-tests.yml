@@ -32,7 +32,7 @@ jobs:
           echo ${GITHUB_BASE_REF}
           echo ${GITHUB_REF}
           echo ${GITHUB_REF_NAME}
-          GIT_BRANCH=${GITHUB_REF_NAME} make publish_pacts
+          GIT_BRANCH=${GITHUB_HEAD_REF} make publish_pacts
 
   # Runs on branches as well, so we know the status of our PRs
   # GITHUB_HEAD_REF for pull_request:
