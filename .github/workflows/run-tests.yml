@@ -1,7 +1,11 @@
 name: Run tests
 
 on:
-  push:
+  pull_request: # to run tests upon pull request
+    branches:
+      - develop
+      - release**
+      - master
   workflow_dispatch:
 
 env:
