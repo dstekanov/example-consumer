@@ -33,3 +33,12 @@ jobs:
           echo ${GITHUB_REF}
           echo ${GITHUB_REF_NAME}
           GIT_BRANCH=${GITHUB_REF_NAME} make publish_pacts
+
+  # Runs on branches as well, so we know the status of our PRs
+  can-i-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker pull pactfoundation/pact-cli:latest
+      - name: Can I deploy?
+        run: GIT_BRANCH=${GIT_REF:11} make can_i_deploy
