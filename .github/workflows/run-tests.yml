@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+env:
+  PACT_BROKER_BASE_URL: https://poc-test.pactflow.io
+  PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN_FOR_CI_CD_WORKSHOP }}
+  REACT_APP_API_BASE_URL: http://localhost:8080
+  GIT_COMMIT: ${{ github.sha }}
+  GIT_REF: ${{ github.ref }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+      - name: Install
+        run: npm i
+      - name: Test
+        run: make test
+      - name: Publish pacts
+        run: GIT_BRANCH=${GIT_REF:11} make publish_pacts
