@@ -64,4 +64,3 @@ jobs:
       - run: echo "${{ join(needs.*.result, ',') }}"
       - name: Record deployment
         run: GIT_BRANCH=${GITHUB_REF_NAME} make record_deployment
-        if: github.ref == 'refs/heads/master'
