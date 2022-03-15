@@ -63,7 +63,7 @@ test_nock: .env
 ## Deploy tasks
 ## =====================
 
-deploy: deploy_app record_deployment
+deploy: deploy_app
 
 no_deploy:
 	@echo "Not deploying as not on master branch"

@@ -42,7 +42,26 @@ jobs:
     if: always() && needs.can-i-deploy.result == 'success'
     steps:
       - uses: actions/checkout@v2
-      - run: docker pull pactfoundation/pact-cli:latest
       - name: Deploy
         run: GIT_BRANCH=${GIT_REF:11} make deploy
+
+  deploy-demo:
+    runs-on: ubuntu-latest
+    needs: can-i-deploy
+    if: always() && needs.can-i-deploy.result == 'failure'
+    steps:
+      - name: echo
+        run: echo 'Test'
+
+  # Pact: record deployment
+  record-deployment:
+    runs-on: mse-common
+    needs: [ deploy, deploy-demo ]
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker pull pactfoundation/pact-cli:latest
+      - run: echo "${{ join(needs.*.result, ',') }}"
+      - name: Record deployment
+        run: GIT_BRANCH=${GITHUB_REF_NAME} make record_deployment
         if: github.ref == 'refs/heads/master'
